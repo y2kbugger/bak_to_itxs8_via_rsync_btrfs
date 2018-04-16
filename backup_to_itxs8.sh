@@ -43,13 +43,13 @@ sync
 if [ -r "/storage/emulated/0" ]; then
     backupname="${backupname}_internal"
 
-    data="${bakroot}/$backupname"
-    snap="${bakroot}/bak/$backupname/${bakdatetime}"
+    data="${bakroot}/${backupname}"
+    snap="${bakroot}/bak/${backupname}/${bakdatetime}"
 
     echo $snap
-    alias rsynclog="ssh y2k@192.168.1.228 \"cat >> $snap.log\""
+    alias rsynclog2="ssh y2k@192.168.1.228 \"cat >> $snap.log\""
 
-    rsync -avihx ${dry} --delete --progress /storage/emulated/0 y2k@192.168.1.228:${data} | rsynclog
+    rsync -avihx ${dry} --delete --progress /storage/emulated/0 y2k@192.168.1.228:${data} | rsynclog2
     sync
 
     # make a read only snapshot if not dry-run

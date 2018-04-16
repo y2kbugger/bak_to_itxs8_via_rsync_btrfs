@@ -47,9 +47,9 @@ if [ -r "/storage/emulated/0" ]; then
     snap="${bakroot}/bak/${backupname}/${bakdatetime}"
 
     echo $snap
-    alias rsynclog2="ssh y2k@192.168.1.228 \"cat >> $snap.log\""
+    alias rsynclogg="ssh y2k@192.168.1.228 \"cat >> $snap.log\""
 
-    rsync -avihx ${dry} --delete --progress /storage/emulated/0 y2k@192.168.1.228:${data} | rsynclog2
+    rsync -avihx ${dry} --delete --progress /storage/emulated/0 y2k@192.168.1.228:${data} | rsynclogg
     sync
 
     # make a read only snapshot if not dry-run

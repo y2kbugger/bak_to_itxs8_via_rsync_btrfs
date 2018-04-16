@@ -47,7 +47,7 @@ if [ -r "/storage/emulated/0" ]; then
     data="${bakroot}/${backupname}"
     snap="${bakroot}/bak/${backupname}/${bakdatetime}"
 
-    rsync -avihx ${dry} --delete --progress /storage/emulated/0 y2k@192.168.1.228:${data} | rsynclog $snap
+    rsync -avihx ${dry} --delete --progress /storage/emulated/0/ y2k@192.168.1.228:${data} | rsynclog $snap
     sync
 
     # make a read only snapshot if not dry-run

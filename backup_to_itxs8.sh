@@ -37,10 +37,20 @@ done
 rsync -avihx ${dry} --delete --progress ~/ y2k@192.168.1.228:$data | rsynclog
 sync
 
-
-if [ -r "/storage/emulated/0" ]; then
-    echo "we are on android and can bak up internal sd"
-fi
-
 # make a read only snapshot if not dry-run
 [ -z "$dry" ] && ssh y2k@192.168.1.228 "sudo btrfs subvolume snapshot -r $data $snap && sync"
+
+if [ -r "/storage/emulated/0" ]; then
+    backupname=${backupname}_internal
+
+    data="${bakroot}/$backupname"
+    snap="${bakroot}/bak/$backupname/${bakdatetime}"
+
+    alias rsynclog="ssh y2k@192.168.1.228 \"cat >> $snap.log\""
+
+    rsync -avihx ${dry} --delete --progress /storage/emulated/0 y2k@192.168.1.228:${data} | rsynclog
+    sync
+
+    # make a read only snapshot if not dry-run
+    [ -z "$dry" ] && ssh y2k@192.168.1.228 "sudo btrfs subvolume snapshot -r ${data} $snap && sync"
+fi

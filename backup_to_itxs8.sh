@@ -21,8 +21,9 @@ esac
 data="${bakroot}/$backupname"
 snap="${bakroot}/bak/$backupname/${bakdatetime}"
 
-shopt -s expand_aliases
-alias rsynclog="ssh y2k@192.168.1.228 \"cat >> $snap.log\""
+function rsynclog {
+    ssh y2k@192.168.1.228 "cat >> $1.log"
+}
 
 
 echo "Dry run?"
@@ -34,7 +35,7 @@ select yn in "Yes" "No"; do
 done
 
 # backup current state
-rsync -avihx ${dry} --delete --progress ~/ y2k@192.168.1.228:$data | rsynclog
+rsync -avihx ${dry} --delete --progress ~/ y2k@192.168.1.228:$data | rsynclog $snap
 sync
 
 # make a read only snapshot if not dry-run
@@ -46,10 +47,7 @@ if [ -r "/storage/emulated/0" ]; then
     data="${bakroot}/${backupname}"
     snap="${bakroot}/bak/${backupname}/${bakdatetime}"
 
-    echo $snap
-    alias rsynclogg="ssh y2k@192.168.1.228 \"cat >> $snap.log\""
-
-    rsync -avihx ${dry} --delete --progress /storage/emulated/0 y2k@192.168.1.228:${data} | rsynclogg
+    rsync -avihx ${dry} --delete --progress /storage/emulated/0 y2k@192.168.1.228:${data} | rsynclog $snap
     sync
 
     # make a read only snapshot if not dry-run

@@ -41,11 +41,12 @@ sync
 [ -z "$dry" ] && ssh y2k@192.168.1.228 "sudo btrfs subvolume snapshot -r $data $snap && sync"
 
 if [ -r "/storage/emulated/0" ]; then
-    backupname=${backupname}_internal
+    backupname="${backupname}_internal"
 
     data="${bakroot}/$backupname"
     snap="${bakroot}/bak/$backupname/${bakdatetime}"
 
+    echo $snap
     alias rsynclog="ssh y2k@192.168.1.228 \"cat >> $snap.log\""
 
     rsync -avihx ${dry} --delete --progress /storage/emulated/0 y2k@192.168.1.228:${data} | rsynclog

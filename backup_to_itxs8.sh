@@ -34,7 +34,7 @@ select yn in "Yes" "No"; do
 done
 
 # backup current state
-rsync -avihx ${dry} --delete --progress /home/y2k/ y2k@192.168.1.228:$data | rsynclog
+rsync -avihx ${dry} --delete --progress ~/ y2k@192.168.1.228:$data | rsynclog
 sync
 
 
@@ -42,5 +42,5 @@ if [ -r "/storage/emulated/0" ]; then
     echo "we are on android and can bak up internal sd"
 fi
 
-# make a read only snapshot
-ssh y2k@192.168.1.228 "sudo btrfs subvolume snapshot -r $data $snap && sync"
+# make a read only snapshot if not dry-run
+[ -z "$var" ] && ssh y2k@192.168.1.228 "sudo btrfs subvolume snapshot -r $data $snap && sync"

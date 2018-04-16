@@ -34,7 +34,7 @@ select yn in "Yes" "No"; do
 done
 
 # backup current state
-rsync -aAXvihx ${dry} --delete --progress /home/y2k/ y2k@192.168.1.228:$data | rsynclog
+rsync -avihx ${dry} --delete --progress /home/y2k/ y2k@192.168.1.228:$data | rsynclog
 sync
 
 

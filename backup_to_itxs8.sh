@@ -43,4 +43,4 @@ if [ -r "/storage/emulated/0" ]; then
 fi
 
 # make a read only snapshot if not dry-run
-[ -z "$var" ] && ssh y2k@192.168.1.228 "sudo btrfs subvolume snapshot -r $data $snap && sync"
+[ -z "$dry" ] && ssh y2k@192.168.1.228 "sudo btrfs subvolume snapshot -r $data $snap && sync"

@@ -8,10 +8,10 @@ case "$HOSTNAME" in
     backupname=$HOSTNAME
     ;;
   *)
-    echo "Is this running from pix2?"
+    echo "Is this running from pix4?"
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) backupname="pix2"; break;;
+            Yes ) backupname="pix4"; break;;
             No ) exit;;
         esac
     done
